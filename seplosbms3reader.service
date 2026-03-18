@@ -1,0 +1,16 @@
+[Unit]
+Description=Seplos BMS v3 reader. Sniffs data from a RS485 serial port into /dev/shm file.
+
+[Service]
+ExecStart=/opt/seplos-bms-reader/seplosbms3reader.py
+User=root
+Group=root
+Restart=always
+RestartSec=15
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=seplosbms3reader
+
+[Install]
+WantedBy=multi-user.target
+

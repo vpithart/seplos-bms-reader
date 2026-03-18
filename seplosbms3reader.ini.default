@@ -1,0 +1,2 @@
+[seplosbms3reader]
+serial = /dev/ttyUSB0

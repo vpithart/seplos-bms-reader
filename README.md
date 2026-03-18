@@ -23,6 +23,54 @@ linux:~$ ls -la /dev/shm/seplos_bms*json
 -rw-r--r-- 679 Mar 18 11:09 /dev/shm/seplos_bms_unit3.json
 ```
 
+## Installation
+
+Download sources
+```sh
+cd /opt
+git clone https://github.com/vpithart/seplos-bms-reader.git
+cd seplos-bms-reader
+```
+
+Configure
+```sh
+cp seplosbms3reader.ini.default seplosbms3reader.ini
+vim seplosbms3reader.ini
+# set your serial port (/dev/ttyUSB0 or similar) and save
+```
+
+Test
+```sh
+./seplosbms3reader.py
+```
+
+Observe
+```
+Opening serial interface, port: /dev/ttyUSB0 19200 8N1
+...
+Seplos BMS: 3 units detected.
+Unit 1: 56.5% 53.23V Charge 18.29A
+Unit 2: 58.6% 53.21V Charge 18.03A
+Unit 3: 57.7% 53.25V Charge 18.42A
+```
+
+Run automatically via systemd (debian, ubuntu)
+```sh
+sudo su -
+cd /opt/seplos-bms-reader
+
+ln -s /opt/seplos-bms-reader/seplosbms3reader.service /usr/lib/systemd/system/seplosbms3reader.service
+
+systemctl daemon-reload
+systemctl start seplosbms3reader
+systemctl enable seplosbms3reader
+```
+
+Read the logs
+```sh
+journalctl -f -u seplosbms3reader
+```
+
 ## Readings file format
 Example file contents for battery pack 1 of 3:
 ```sh
